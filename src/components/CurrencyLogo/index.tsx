@@ -1,19 +1,20 @@
-import { ChainId, Currency, Token, Fetcher, DXD } from 'dxswap-sdk'
-import React, { ReactNode, useMemo } from 'react'
-import Skeleton from 'react-loading-skeleton'
-import styled from 'styled-components'
+import { ChainId, Currency, Token, Fetcher, DXD } from 'dxswap-sdk';
+import React, { ReactNode, useMemo } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import styled from 'styled-components';
 
-import EthereumLogo from '../../assets/images/ethereum-logo.png'
-import PoaLogo from '../../assets/images/poa-logo.png'
-import XDAILogo from '../../assets/images/xdai-logo.png'
-import MaticLogo from '../../assets/images/matic-logo.png'
-import DXDLogo from '../../assets/svg/dxd.svg'
-import { useActiveWeb3React } from '../../hooks'
-import useHttpLocations from '../../hooks/useHttpLocations'
-import { WrappedTokenInfo } from '../../state/lists/hooks'
-import Logo from '../Logo'
+import EthereumLogo from '../../assets/images/ethereum-logo.png';
+import PoaLogo from '../../assets/images/poa-logo.png';
+import XDAILogo from '../../assets/images/xdai-logo.png';
+import MaticLogo from '../../assets/images/matic-logo.png';
+import EspentoLogo from '../../assets/images/espento-logo.png';
+import DXDLogo from '../../assets/svg/dxd.svg';
+import { useActiveWeb3React } from '../../hooks';
+import useHttpLocations from '../../hooks/useHttpLocations';
+import { WrappedTokenInfo } from '../../state/lists/hooks';
+import Logo from '../Logo';
 
-const StyledLogo = styled(Logo)<{ size: string }>`
+const StyledLogo = styled(Logo) <{ size: string; }>`
   width: ${({ size }) => size};
   height: ${({ size }) => size};
   border-radius: ${({ size }) => size};
@@ -23,9 +24,9 @@ const StyledLogo = styled(Logo)<{ size: string }>`
   bottom: 0;
   left: 0;
   right: 0;
-`
+`;
 
-const Wrapper = styled.div<{ size: string; marginRight: number; marginLeft: number; loading?: boolean }>`
+const Wrapper = styled.div<{ size: string; marginRight: number; marginLeft: number; loading?: boolean; }>`
   margin-right: ${({ marginRight }) => marginRight}px;
   margin-left: ${({ marginLeft }) => marginLeft}px;
   width: ${({ size }) => size};
@@ -33,7 +34,7 @@ const Wrapper = styled.div<{ size: string; marginRight: number; marginLeft: numb
   border-radius: ${({ size }) => size};
   background-color: ${props => (props.loading ? 'transparent' : props.theme.bg1)};
   position: relative;
-`
+`;
 
 const NATIVE_CURRENCY_LOGO: { [chainId in ChainId]: string } = {
   [ChainId.ARBITRUM_TESTNET_V3]: EthereumLogo,
@@ -41,8 +42,9 @@ const NATIVE_CURRENCY_LOGO: { [chainId in ChainId]: string } = {
   [ChainId.RINKEBY]: EthereumLogo,
   [ChainId.SOKOL]: PoaLogo,
   [ChainId.XDAI]: XDAILogo,
-  [ChainId.MATIC]: MaticLogo
-}
+  [ChainId.MATIC]: MaticLogo,
+  [ChainId.ESPENTO]: EspentoLogo
+};
 
 export default function CurrencyLogo({
   currency,
@@ -53,32 +55,32 @@ export default function CurrencyLogo({
   marginRight = 0,
   marginLeft = 0
 }: {
-  currency?: Currency
-  size?: string
-  style?: React.CSSProperties
-  className?: string
-  loading?: boolean
-  marginRight?: number
-  marginLeft?: number
+  currency?: Currency;
+  size?: string;
+  style?: React.CSSProperties;
+  className?: string;
+  loading?: boolean;
+  marginRight?: number;
+  marginLeft?: number;
 }) {
-  const { chainId } = useActiveWeb3React()
-  const nativeCurrencyLogo = NATIVE_CURRENCY_LOGO[(chainId as ChainId) || ChainId.XDAI]
-  const uriLocations = useHttpLocations(currency instanceof WrappedTokenInfo ? currency.logoURI : undefined)
+  const { chainId } = useActiveWeb3React();
+  const nativeCurrencyLogo = NATIVE_CURRENCY_LOGO[(chainId as ChainId) || ChainId.XDAI];
+  const uriLocations = useHttpLocations(currency instanceof WrappedTokenInfo ? currency.logoURI : undefined);
 
   const srcs: string[] = useMemo(() => {
-    if (currency && Currency.isNative(currency) && !!nativeCurrencyLogo) return [nativeCurrencyLogo]
+    if (currency && Currency.isNative(currency) && !!nativeCurrencyLogo) return [nativeCurrencyLogo];
     if (currency instanceof Token) {
-      if (Token.isNativeWrapper(currency)) return [nativeCurrencyLogo]
-      if (chainId && DXD[chainId] && DXD[chainId].address === currency.address) return [DXDLogo]
-      return [...uriLocations, Fetcher.getCachedTokenLogo(currency)]
+      if (Token.isNativeWrapper(currency)) return [nativeCurrencyLogo];
+      if (chainId && DXD[chainId] && DXD[chainId].address === currency.address) return [DXDLogo];
+      return [...uriLocations, Fetcher.getCachedTokenLogo(currency)];
     }
-    return []
-  }, [chainId, currency, nativeCurrencyLogo, uriLocations])
+    return [];
+  }, [chainId, currency, nativeCurrencyLogo, uriLocations]);
 
   if (loading)
     return (
       <Skeleton
-        wrapper={({ children }: { children: ReactNode }) => (
+        wrapper={({ children }: { children: ReactNode; }) => (
           <Wrapper
             loading={loading}
             size={size}
@@ -93,7 +95,7 @@ export default function CurrencyLogo({
         width={size}
         height={size}
       />
-    )
+    );
   return (
     <Wrapper size={size} marginRight={marginRight} marginLeft={marginLeft} className={className}>
       <StyledLogo
@@ -104,5 +106,5 @@ export default function CurrencyLogo({
         style={style}
       />
     </Wrapper>
-  )
+  );
 }

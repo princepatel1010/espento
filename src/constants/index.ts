@@ -1,16 +1,16 @@
-import { AbstractConnector } from '@web3-react/abstract-connector'
-import { ChainId, JSBI, Percent, CurrencyAmount, WETH, WSPOA, WXDAI, Token, Currency, WMATIC } from 'dxswap-sdk'
-import { tokens } from './tokens'
-import { injected, walletConnectMATIC, walletConnectXDAI, walletlink, uauth, bitKeepInjected } from '../connectors'
+import { AbstractConnector } from '@web3-react/abstract-connector';
+import { ChainId, JSBI, Percent, CurrencyAmount, WETH, WSPOA, WXDAI, Token, Currency, WMATIC } from 'dxswap-sdk';
+import { tokens } from './tokens';
+import { injected, walletConnectMATIC, walletConnectXDAI, walletlink, uauth, bitKeepInjected } from '../connectors';
 
-export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 // a list of tokens by chain
 type ChainTokenList = {
   readonly [chainId in ChainId]: Token[]
-}
+};
 
-export const DAI: { [key: number]: Token } = {
+export const DAI: { [key: number]: Token; } = {
   [ChainId.MAINNET]: new Token(
     ChainId.MAINNET,
     '0x6b175474e89094c44da98b954eedeac495271d0f',
@@ -20,9 +20,9 @@ export const DAI: { [key: number]: Token } = {
   ),
   [ChainId.XDAI]: new Token(ChainId.XDAI, '0x44fa8e6f47987339850636f88629646662444217', 18, 'DAI', 'Dai Stablecoin'),
   [ChainId.MATIC]: new Token(ChainId.MATIC, '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063', 18, 'DAI', 'Dai Stablecoin')
-}
+};
 
-export const USDC: { [key: number]: Token } = {
+export const USDC: { [key: number]: Token; } = {
   [ChainId.MAINNET]: new Token(ChainId.MAINNET, '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', 6, 'USDC', 'USD//C'),
   [ChainId.XDAI]: new Token(
     ChainId.XDAI,
@@ -32,9 +32,9 @@ export const USDC: { [key: number]: Token } = {
     'USD//C from Ethereum'
   ),
   [ChainId.MATIC]: new Token(ChainId.MATIC, '0x2791bca1f2de4661ed88a30c99a7a9449aa84174', 6, 'USDC', 'PoS USDC')
-}
+};
 
-export const USDT: { [key: number]: Token } = {
+export const USDT: { [key: number]: Token; } = {
   [ChainId.MAINNET]: new Token(ChainId.MAINNET, '0xdAC17F958D2ee523a2206206994597C13D831ec7', 6, 'USDT', 'Tether USD'),
   [ChainId.XDAI]: new Token(
     ChainId.XDAI,
@@ -43,10 +43,10 @@ export const USDT: { [key: number]: Token } = {
     'USDT',
     'Tether USD from Ethereum'
   ),
-  [ChainId.MATIC]: new Token(ChainId.MATIC, '0xc2132d05d31c914a87c6611c10748aeb04b58e8f', 6, 'USDT', 'PoS Tether USD')
-}
+  [ChainId.MATIC]: new Token(ChainId.MATIC, '0xc2132d05d31c914a87c6611c10748aeb04b58e8f', 6, 'USDT', 'PoS Tether USD'),
+};
 
-export const WBTC: { [key: number]: Token } = {
+export const WBTC: { [key: number]: Token; } = {
   [ChainId.MAINNET]: new Token(
     ChainId.MAINNET,
     '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
@@ -61,12 +61,12 @@ export const WBTC: { [key: number]: Token } = {
     'WBTC',
     'Wrapped BTC from Ethereum'
   )
-}
+};
 
-export const HONEY: { [key: number]: Token } = {
+export const HONEY: { [key: number]: Token; } = {
   [ChainId.XDAI]: new Token(ChainId.XDAI, '0x71850b7e9ee3f13ab46d67167341e4bdc905eef9', 18, 'HNY', 'Honey'),
   [ChainId.MATIC]: new Token(ChainId.MATIC, '0xb371248dd0f9e4061ccf8850e9223ca48aa7ca4b', 18, 'HNY', 'Honey')
-}
+};
 
 export const STAKE = new Token(
   ChainId.XDAI,
@@ -74,7 +74,7 @@ export const STAKE = new Token(
   18,
   'STAKE',
   'Stake Token on xDai'
-)
+);
 
 export const BAO = new Token(
   ChainId.XDAI,
@@ -82,12 +82,12 @@ export const BAO = new Token(
   18,
   'BAO',
   'BaoToken from Ethereum'
-)
+);
 
-export const AGAVE = new Token(ChainId.XDAI, '0x3a97704a1b25F08aa230ae53B352e2e72ef52843', 18, 'AGVE', 'Agave token')
+export const AGAVE = new Token(ChainId.XDAI, '0x3a97704a1b25F08aa230ae53B352e2e72ef52843', 18, 'AGVE', 'Agave token');
 
-export const SURF = new Token(ChainId.MATIC, '0x1e42edbe5376e717c1b22904c59e406426e8173f', 18, 'SURF', 'SURF.Finance')
-export const WAVE = new Token(ChainId.MATIC, '0x4de7fea447b837d7e77848a4b6c0662a64a84e14', 18, 'WAVE', 'WAVE Token')
+export const SURF = new Token(ChainId.MATIC, '0x1e42edbe5376e717c1b22904c59e406426e8173f', 18, 'SURF', 'SURF.Finance');
+export const WAVE = new Token(ChainId.MATIC, '0x4de7fea447b837d7e77848a4b6c0662a64a84e14', 18, 'WAVE', 'WAVE Token');
 
 export const GIV = new Token(
   ChainId.XDAI,
@@ -95,14 +95,14 @@ export const GIV = new Token(
   18,
   'GIV',
   'Giveth from Mainnet'
-)
+);
 export const TEC = new Token(
   ChainId.XDAI,
   '0x5df8339c5e282ee48c0c7ce8a7d01a73d38b3b27',
   18,
   'TEC',
   'Token Engineering Commons'
-)
+);
 
 export const GNO = new Token(
   ChainId.XDAI,
@@ -110,9 +110,9 @@ export const GNO = new Token(
   18,
   'GNO',
   'Gnosis Token from Ethereum'
-)
+);
 
-export const WATER = new Token(ChainId.XDAI, '0x4291F029B9e7acb02D49428458cf6fceAC545f81', 18, 'WATER', 'Water Token')
+export const WATER = new Token(ChainId.XDAI, '0x4291F029B9e7acb02D49428458cf6fceAC545f81', 18, 'WATER', 'Water Token');
 
 export const BRIGHT = new Token(
   ChainId.XDAI,
@@ -120,7 +120,7 @@ export const BRIGHT = new Token(
   18,
   'BRIGHT',
   'Bright from Ethereum'
-)
+);
 
 export const WORK = new Token(
   ChainId.XDAI,
@@ -128,9 +128,10 @@ export const WORK = new Token(
   18,
   'WORK',
   'The Employment Commons Work Token from Mainnet'
-)
+);
 
-export const FOX = new Token(ChainId.XDAI, '0x21a42669643f45Bc0e086b8Fc2ed70c23D67509d', 18, 'FOX', 'FOX from Ethereum')
+export const FOX = new Token(ChainId.XDAI, '0x21a42669643f45Bc0e086b8Fc2ed70c23D67509d', 18, 'FOX', 'FOX from Ethereum');
+export const DEMO = new Token(ChainId.ESPENTO, '0x1b6a053133932E7F867E77bbC6a29120Bc99f931', 18, 'DEMO', 'DEMO from Espento');
 
 // used to construct intermediary pairs for trading
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
@@ -142,6 +143,7 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     USDT[ChainId.MAINNET]
   ],
   [ChainId.RINKEBY]: [WETH[ChainId.RINKEBY]],
+  [ChainId.ESPENTO]: [DEMO],
   [ChainId.ARBITRUM_TESTNET_V3]: [WETH[ChainId.ARBITRUM_TESTNET_V3]],
   [ChainId.SOKOL]: [WSPOA[ChainId.SOKOL]],
   [ChainId.XDAI]: [
@@ -170,7 +172,7 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     SURF,
     WAVE
   ]
-}
+};
 
 // used for display in the default list when adding liquidity (native currency is already shown
 // by default, so no need to add the wrapper to the list)
@@ -180,8 +182,9 @@ export const SUGGESTED_BASES: ChainTokenList = {
   [ChainId.ARBITRUM_TESTNET_V3]: [],
   [ChainId.SOKOL]: [],
   [ChainId.XDAI]: [WETH[ChainId.XDAI], USDC[ChainId.XDAI], HONEY[ChainId.XDAI]],
-  [ChainId.MATIC]: [WETH[ChainId.MATIC], HONEY[ChainId.MATIC]]
-}
+  [ChainId.MATIC]: [WETH[ChainId.MATIC], HONEY[ChainId.MATIC]],
+  [ChainId.ESPENTO]: [DEMO]
+};
 
 // used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
@@ -197,29 +200,30 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
     DAI[ChainId.MATIC],
     USDC[ChainId.MATIC],
     USDT[ChainId.MATIC]
-  ]
-}
+  ],
+  [ChainId.ESPENTO]: [DEMO]
+};
 
 export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {
   [ChainId.MAINNET]: [
     [USDC[ChainId.MAINNET], USDT[ChainId.MAINNET]],
-    [DAI[ChainId.MAINNET], USDT[ChainId.MAINNET]]
+    [DAI[ChainId.MAINNET], USDT[ChainId.MAINNET]],
   ]
-}
+};
 
 export interface WalletInfo {
-  connector?: AbstractConnector
-  name: string
-  iconName: string
-  description: string
-  href: string | null
-  color: string
-  primary?: true
-  mobile?: true
-  mobileOnly?: true
+  connector?: AbstractConnector;
+  name: string;
+  iconName: string;
+  description: string;
+  href: string | null;
+  color: string;
+  primary?: true;
+  mobile?: true;
+  mobileOnly?: true;
 }
 
-export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
+export const SUPPORTED_WALLETS: { [key: string]: WalletInfo; } = {
   INJECTED: {
     connector: injected,
     name: 'Injected',
@@ -287,53 +291,53 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     href: null,
     color: '#4196FC'
   }
-}
+};
 
-export const NetworkContextName = 'NETWORK'
+export const NetworkContextName = 'NETWORK';
 
 // default allowed slippage, in bips
-export const INITIAL_ALLOWED_SLIPPAGE = 50
+export const INITIAL_ALLOWED_SLIPPAGE = 50;
 // 20 minutes, denominated in seconds
-export const DEFAULT_DEADLINE_FROM_NOW = 60 * 20
+export const DEFAULT_DEADLINE_FROM_NOW = 60 * 20;
 
-export const BIG_INT_ZERO = JSBI.BigInt(0)
+export const BIG_INT_ZERO = JSBI.BigInt(0);
 
 // one basis point
-export const ONE_BIPS = new Percent(JSBI.BigInt(1), JSBI.BigInt(10000))
-export const BIPS_BASE = JSBI.BigInt(10000)
+export const ONE_BIPS = new Percent(JSBI.BigInt(1), JSBI.BigInt(10000));
+export const BIPS_BASE = JSBI.BigInt(10000);
 // used for warning states
-export const ALLOWED_PRICE_IMPACT_LOW: Percent = new Percent(JSBI.BigInt(100), BIPS_BASE) // 1%
-export const ALLOWED_PRICE_IMPACT_MEDIUM: Percent = new Percent(JSBI.BigInt(300), BIPS_BASE) // 3%
-export const ALLOWED_PRICE_IMPACT_HIGH: Percent = new Percent(JSBI.BigInt(500), BIPS_BASE) // 5%
+export const ALLOWED_PRICE_IMPACT_LOW: Percent = new Percent(JSBI.BigInt(100), BIPS_BASE); // 1%
+export const ALLOWED_PRICE_IMPACT_MEDIUM: Percent = new Percent(JSBI.BigInt(300), BIPS_BASE); // 3%
+export const ALLOWED_PRICE_IMPACT_HIGH: Percent = new Percent(JSBI.BigInt(500), BIPS_BASE); // 5%
 // if the price slippage exceeds this number, force the user to type 'confirm' to execute
-export const PRICE_IMPACT_WITHOUT_FEE_CONFIRM_MIN: Percent = new Percent(JSBI.BigInt(1000), BIPS_BASE) // 10%
+export const PRICE_IMPACT_WITHOUT_FEE_CONFIRM_MIN: Percent = new Percent(JSBI.BigInt(1000), BIPS_BASE); // 10%
 // for non expert mode disable swaps above this
-export const BLOCKED_PRICE_IMPACT_NON_EXPERT: Percent = new Percent(JSBI.BigInt(1500), BIPS_BASE) // 15%
+export const BLOCKED_PRICE_IMPACT_NON_EXPERT: Percent = new Percent(JSBI.BigInt(1500), BIPS_BASE); // 15%
 
 // used to ensure the user doesn't send so much ETH so they end up with <.01
-export const MIN_ETH: JSBI = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(16)) // .01 ETH
+export const MIN_ETH: JSBI = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(16)); // .01 ETH
 
-export const DEFAULT_TOKEN_LIST = tokens
+export const DEFAULT_TOKEN_LIST = tokens;
 
-export const ZERO_USD = CurrencyAmount.usd('0')
+export const ZERO_USD = CurrencyAmount.usd('0');
 
 interface NetworkDetails {
-  chainId: string
-  chainName: string
+  chainId: string;
+  chainName: string;
   nativeCurrency: {
-    name: string
-    symbol: string
-    decimals: number
-  }
-  rpcUrls: string[]
-  blockExplorerUrls?: string[]
-  iconUrls?: string[] // Currently ignored.
-  metamaskAddable?: boolean
+    name: string;
+    symbol: string;
+    decimals: number;
+  };
+  rpcUrls: string[];
+  blockExplorerUrls?: string[];
+  iconUrls?: string[]; // Currently ignored.
+  metamaskAddable?: boolean;
 }
 
-export const MATIC_PROJECT_ID = '917500540ed6561baeb650de48df44949ed21baf'
+export const MATIC_PROJECT_ID = '917500540ed6561baeb650de48df44949ed21baf';
 
-export const NETWORK_DETAIL: { [chainId: number]: NetworkDetails } = {
+export const NETWORK_DETAIL: { [chainId: number]: NetworkDetails; } = {
   [ChainId.MAINNET]: {
     chainId: `0x${ChainId.MAINNET.toString(16)}`,
     chainName: 'Ethereum Main Net',
@@ -369,5 +373,18 @@ export const NETWORK_DETAIL: { [chainId: number]: NetworkDetails } = {
     rpcUrls: ['https://poly-mainnet.gateway.pokt.network/v1/lb/61141e8259501900341bb3e2'],
     blockExplorerUrls: ['https://explorer.matic.network/'],
     metamaskAddable: true
+  },
+  [ChainId.ESPENTO]: {
+    chainId: `0x${ChainId.ESPENTO.toString(16)}`,
+    chainName: 'Espento',
+    nativeCurrency: {
+      name: Currency.ESPENTO.name || 'Espento',
+      symbol: Currency.ESPENTO.symbol || 'Espento',
+      decimals: Currency.ESPENTO.decimals || 18
+    },
+    // rpcUrls: [`https://rpc-mainnet.maticvigil.com/v1/${MATIC_PROJECT_ID}`],
+    rpcUrls: ['https://rpc.escscan.com/'],
+    blockExplorerUrls: ['https://escscan.com'],
+    metamaskAddable: true
   }
-}
+};

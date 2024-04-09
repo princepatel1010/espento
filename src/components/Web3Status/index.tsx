@@ -1,64 +1,25 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
-import { darken, transparentize } from 'polished'
-import React, { useMemo } from 'react'
-import { Activity, ChevronDown } from 'react-feather'
+import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core';
+import { darken, transparentize } from 'polished';
+import React, { useMemo } from 'react';
+import { Activity } from 'react-feather';
 
-import { useTranslation } from 'react-i18next'
-import styled from 'styled-components'
-import { NetworkContextName } from '../../constants'
-import useENSName from '../../hooks/useENSName'
-import { useWalletModalToggle, useNetworkSwitcherPopoverToggle } from '../../state/application/hooks'
-import { isTransactionRecent, useAllTransactions } from '../../state/transactions/hooks'
-import { TransactionDetails } from '../../state/transactions/reducer'
-import { shortenAddress } from '../../utils'
-import { TYPE } from '../../theme'
-import { ButtonSecondary } from '../Button'
-import Loader from '../Loader'
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+import { NetworkContextName } from '../../constants';
+import useENSName from '../../hooks/useENSName';
+import { useWalletModalToggle } from '../../state/application/hooks';
+import { isTransactionRecent, useAllTransactions } from '../../state/transactions/hooks';
+import { TransactionDetails } from '../../state/transactions/reducer';
+import { shortenAddress } from '../../utils';
+import { ButtonSecondary } from '../Button';
+import Loader from '../Loader';
 
-import { RowBetween } from '../Row'
-import WalletModal from '../WalletModal'
-import NetworkSwitcherPopover from '../NetworkSwitcherPopover'
+import { RowBetween } from '../Row';
+import WalletModal from '../WalletModal';
 
-import EthereumLogo from '../../assets/images/ethereum-logo.png'
-import GnosisLogo from '../../assets/images/gnosis-chain-logo.png'
-import ArbitrumLogo from '../../assets/images/arbitrum-logo.jpg'
-import PolygonLogo from '../../assets/images/polygon-logo.png'
-import { ChainId } from 'dxswap-sdk'
-import { useActiveWeb3React } from '../../hooks'
-import useUAuthUser from '../../hooks/useUAuthUser'
-
-const ChainLogo: any = {
-  // [ChainId.MAINNET]: EthereumLogo,
-  [ChainId.RINKEBY]: EthereumLogo,
-  [ChainId.ARBITRUM_TESTNET_V3]: ArbitrumLogo,
-  [ChainId.SOKOL]: '',
-  [ChainId.XDAI]: GnosisLogo,
-  [ChainId.MATIC]: PolygonLogo
-}
-
-const ChainLabel: any = {
-  [ChainId.MAINNET]: 'Choose network',
-  [ChainId.RINKEBY]: 'Rinkeby',
-  [ChainId.ARBITRUM_TESTNET_V3]: 'Arbitrum',
-  [ChainId.SOKOL]: 'Sokol',
-  [ChainId.XDAI]: 'Gnosis Chain',
-  [ChainId.MATIC]: 'Polygon'
-}
-
-const IconWrapper = styled.div<{ size?: number | null }>`
-  ${({ theme }) => theme.flexColumnNoWrap};
-  align-items: center;
-  justify-content: center;
-  & > img,
-  span {
-    height: ${({ size }) => (size ? size + 'px' : '30px')};
-    border-radius: 50%;
-  }
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    align-items: center;
-  `};
-`
+import { useActiveWeb3React } from '../../hooks';
+import useUAuthUser from '../../hooks/useUAuthUser';
 
 const Web3StatusGeneric = styled(ButtonSecondary)`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -71,7 +32,7 @@ const Web3StatusGeneric = styled(ButtonSecondary)`
   :focus {
     outline: none;
   }
-`
+`;
 const Web3StatusError = styled(Web3StatusGeneric)`
   background-color: ${({ theme }) => theme.red1};
   border: 1px solid ${({ theme }) => theme.red1};
@@ -85,9 +46,9 @@ const Web3StatusError = styled(Web3StatusGeneric)`
   :focus {
     background-color: ${({ theme }) => darken(0.1, theme.red1)};
   }
-`
+`;
 
-const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
+const Web3StatusConnect = styled(Web3StatusGeneric) <{ faded?: boolean; }>`
   background-color: ${({ theme }) => transparentize(0.25, theme.bg1)};
   color: ${({ theme }) => theme.text4};
   border: none;
@@ -107,9 +68,9 @@ const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
     box-shadow: none;
     background-color: ${({ theme }) => transparentize(0.1, theme.bg1)};
   }
-`
+`;
 
-const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
+const Web3StatusConnected = styled(Web3StatusGeneric) <{ pending?: boolean; }>`
   background-color: ${({ pending, theme }) => (pending ? theme.primary1 : theme.dark2)};
   border: none;
   color: ${({ pending, theme }) => (pending ? theme.white : theme.text4)};
@@ -125,15 +86,9 @@ const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
     border: none;
     background-color: ${({ pending, theme }) => (pending ? theme.primary1 : transparentize(0.1, theme.purple3))};
   }
-`
+`;
 
-const Web3StatusNetwork = styled(Web3StatusGeneric)<{ pending?: boolean }>`
-  background-color: ${({ theme }) => theme.dark1};
-  padding: 0px 18px 0px 14px;
-  border: 1px solid ${({ theme }) => theme.dark1};
-`
-
-const Text = styled.p<{ fontSize?: number }>`
+const Text = styled.p<{ fontSize?: number; }>`
   flex: 1 1 auto;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -143,46 +98,45 @@ const Text = styled.p<{ fontSize?: number }>`
   width: fit-content;
   font-weight: 500;
   ${({ fontSize }) => (fontSize ? `font-size:${fontSize}px` : '')};
-`
+`;
 
 const NetworkIcon = styled(Activity)`
   width: 15px;
   height: 15px;
-`
+`;
 
 // we want the latest one to come first, so return negative if a is after b
 function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
-  return b.addedTime - a.addedTime
+  return b.addedTime - a.addedTime;
 }
 
 function Web3StatusInner() {
-  const { t } = useTranslation()
-  const { account, error } = useWeb3React()
-  const { chainId: networkConnectorChainId } = useActiveWeb3React()
+  const { t } = useTranslation();
+  const { account, error } = useWeb3React();
+  const { chainId: networkConnectorChainId } = useActiveWeb3React();
 
-  const { ENSName } = useENSName(account ?? undefined)
-  const user = useUAuthUser(account ?? undefined)
-  const allTransactions = useAllTransactions()
+  const { ENSName } = useENSName(account ?? undefined);
+  const user = useUAuthUser(account ?? undefined);
+  const allTransactions = useAllTransactions();
 
   const sortedRecentTransactions = useMemo(() => {
-    const txs = Object.values(allTransactions)
-    return txs.filter(isTransactionRecent).sort(newTransactionsFirst)
-  }, [allTransactions])
+    const txs = Object.values(allTransactions);
+    return txs.filter(isTransactionRecent).sort(newTransactionsFirst);
+  }, [allTransactions]);
 
-  const pending = sortedRecentTransactions.filter(tx => !tx.receipt).map(tx => tx.hash)
+  const pending = sortedRecentTransactions.filter(tx => !tx.receipt).map(tx => tx.hash);
 
-  const hasPendingTransactions = !!pending.length
-  const toggleWalletModal = useWalletModalToggle()
-  const toggleNetworkSwitcherPopover = useNetworkSwitcherPopoverToggle()
+  const hasPendingTransactions = !!pending.length;
+  const toggleWalletModal = useWalletModalToggle();
 
   if (error) {
-    console.error('webstatusinner err:', error)
+    console.error('webstatusinner err:', error);
     return (
       <Web3StatusError onClick={toggleWalletModal}>
         <NetworkIcon />
         <Text>{error instanceof UnsupportedChainIdError ? 'Wrong Network' : 'Error'}</Text>
       </Web3StatusError>
-    )
+    );
   }
   if (networkConnectorChainId) {
     return (
@@ -202,41 +156,31 @@ function Web3StatusInner() {
             {t('No wallet connected')}
           </Web3StatusConnect>
         )}
-        <NetworkSwitcherPopover>
-          <Web3StatusNetwork onClick={!!!account ? toggleNetworkSwitcherPopover : () => {}}>
-            <IconWrapper size={20}>
-              <img src={ChainLogo[networkConnectorChainId]} alt={''} />
-            </IconWrapper>
-            <TYPE.white ml="8px" mr={!!!account ? '4px' : '0px'} fontWeight={700} fontSize="12px">
-              {ChainLabel[networkConnectorChainId]}
-            </TYPE.white>
-            {!!!account && <ChevronDown size={16} />}
-          </Web3StatusNetwork>
-        </NetworkSwitcherPopover>
+
       </>
-    )
+    );
   }
-  return null
+  return null;
 }
 
 export default function Web3Status() {
-  const { active, account } = useWeb3React()
-  const contextNetwork = useWeb3React(NetworkContextName)
+  const { active, account } = useWeb3React();
+  const contextNetwork = useWeb3React(NetworkContextName);
 
-  const { ENSName } = useENSName(account ?? undefined)
+  const { ENSName } = useENSName(account ?? undefined);
 
-  const allTransactions = useAllTransactions()
+  const allTransactions = useAllTransactions();
 
   const sortedRecentTransactions = useMemo(() => {
-    const txs = Object.values(allTransactions)
-    return txs.filter(isTransactionRecent).sort(newTransactionsFirst)
-  }, [allTransactions])
+    const txs = Object.values(allTransactions);
+    return txs.filter(isTransactionRecent).sort(newTransactionsFirst);
+  }, [allTransactions]);
 
-  const pending = sortedRecentTransactions.filter(tx => !tx.receipt).map(tx => tx.hash)
-  const confirmed = sortedRecentTransactions.filter(tx => tx.receipt).map(tx => tx.hash)
+  const pending = sortedRecentTransactions.filter(tx => !tx.receipt).map(tx => tx.hash);
+  const confirmed = sortedRecentTransactions.filter(tx => tx.receipt).map(tx => tx.hash);
 
   if (!contextNetwork.active && !active) {
-    return null
+    return null;
   }
 
   return (
@@ -244,5 +188,5 @@ export default function Web3Status() {
       <Web3StatusInner />
       <WalletModal ENSName={ENSName ?? undefined} pendingTransactions={pending} confirmedTransactions={confirmed} />
     </>
-  )
+  );
 }

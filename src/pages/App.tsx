@@ -1,26 +1,26 @@
-import React, { Suspense } from 'react'
-import { Route, Switch, HashRouter } from 'react-router-dom'
-import styled from 'styled-components'
-import Header from '../components/Header'
-import Popups from '../components/Popups'
-import Web3ReactManager from '../components/Web3ReactManager'
-import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
-import AddLiquidity from './AddLiquidity'
-import { RedirectDuplicateTokenIds, RedirectOldAddLiquidityPathStructure } from './AddLiquidity/redirects'
-import Pool from './Pool'
-import PoolFinder from './PoolFinder'
-import RemoveLiquidity from './RemoveLiquidity'
-import { RedirectOldRemoveLiquidityPathStructure } from './RemoveLiquidity/redirects'
-import Swap from './Swap'
-import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
-import Marquee from '../components/Marquee'
+import React, { Suspense } from 'react';
+import { Route, Switch, HashRouter } from 'react-router-dom';
+import styled from 'styled-components';
+import Header from '../components/Header';
+import Popups from '../components/Popups';
+import Web3ReactManager from '../components/Web3ReactManager';
+import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader';
+import AddLiquidity from './AddLiquidity';
+import { RedirectDuplicateTokenIds, RedirectOldAddLiquidityPathStructure } from './AddLiquidity/redirects';
+import Pool from './Pool';
+import PoolFinder from './PoolFinder';
+import RemoveLiquidity from './RemoveLiquidity';
+import { RedirectOldRemoveLiquidityPathStructure } from './RemoveLiquidity/redirects';
+import Swap from './Swap';
+import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects';
+// import Marquee from '../components/Marquee';
 
 const AppWrapper = styled.div`
   display: flex;
   flex-flow: column;
   align-items: flex-start;
   overflow-x: hidden;
-`
+`;
 
 const HeaderWrapper = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -28,7 +28,7 @@ const HeaderWrapper = styled.div`
   z-index: 4;
   height: 86px;
   justify-content: space-between;
-`
+`;
 
 const BodyWrapper = styled.div`
   display: flex;
@@ -48,30 +48,30 @@ const BodyWrapper = styled.div`
   `};
 
   z-index: 1;
-`
+`;
 
-const MarqueeWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 16px;
-  align-items: center;
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  z-index: 10;
+// const MarqueeWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   padding: 16px;
+//   align-items: center;
+//   flex: 1;
+//   overflow-y: auto;
+//   overflow-x: hidden;
+//   z-index: 10;
 
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 16px;
-    padding-top: 2rem;
-  `};
+//   ${({ theme }) => theme.mediaWidth.upToSmall`
+//     padding: 16px;
+//     padding-top: 2rem;
+//   `};
 
-  z-index: 1;
-`
+//   z-index: 1;
+// `;
 
 const Marginer = styled.div`
   margin-top: 5rem;
-`
+`;
 
 const Footer = styled.div`
   font-size: 12px;
@@ -80,7 +80,7 @@ const Footer = styled.div`
   margin: auto;
   padding-bottom: 16px
   color: #fffa;
-`
+`;
 
 export default function App() {
   return (
@@ -111,9 +111,9 @@ export default function App() {
                 <Route component={RedirectPathToSwapOnly} />
               </Switch>
             </Web3ReactManager>
-            <MarqueeWrapper>
+            {/* <MarqueeWrapper>
               <Marquee />
-            </MarqueeWrapper>
+            </MarqueeWrapper> */}
             <Marginer />
           </BodyWrapper>
 
@@ -131,5 +131,5 @@ export default function App() {
         </AppWrapper>
       </HashRouter>
     </Suspense>
-  )
+  );
 }
