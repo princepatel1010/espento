@@ -105,7 +105,6 @@ export default function Swap() {
     currencies[Field.OUTPUT],
     typedValue
   );
-  console.log(allPlatformTrades);
   const bestPricedTrade = allPlatformTrades?.[0]; // the best trade is always the first
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE;
   const trade = showWrap ? undefined : potentialTrade;

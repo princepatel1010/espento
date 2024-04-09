@@ -1,7 +1,7 @@
 import { AbstractConnector } from '@web3-react/abstract-connector';
 import { ChainId, JSBI, Percent, CurrencyAmount, WETH, WSPOA, WXDAI, Token, Currency, WMATIC } from 'dxswap-sdk';
 import { tokens } from './tokens';
-import { injected, walletConnectMATIC, walletConnectXDAI, walletlink, uauth, bitKeepInjected } from '../connectors';
+import { injected, walletConnectXDAI, walletlink, uauth, bitKeepInjected } from '../connectors';
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
@@ -267,16 +267,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo; } = {
   },
   WALLET_CONNECT_XDAI: {
     connector: walletConnectXDAI,
-    name: 'WalletConnect for Gnosis Chain',
-    iconName: 'wallet-connect.svg',
-    description: 'Connect to Trust Wallet, Rainbow Wallet and more...',
-    href: null,
-    color: '#4196FC',
-    mobile: true
-  },
-  WALLET_CONNECT_MATIC: {
-    connector: walletConnectMATIC,
-    name: 'WalletConnect for Polygon',
+    name: 'WalletConnect for Espento',
     iconName: 'wallet-connect.svg',
     description: 'Connect to Trust Wallet, Rainbow Wallet and more...',
     href: null,

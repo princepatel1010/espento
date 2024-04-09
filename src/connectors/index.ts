@@ -32,7 +32,7 @@ export const walletlink = new WalletLinkConnector({
 // xdai only
 export const walletConnectXDAI = new WalletConnectConnector({
   rpc: {
-    100: 'https://poa-xdai.gateway.pokt.network/v1/lb/61140fc659501900341babff'
+    9911: 'https://rpc.escscan.com'
   },
   bridge: 'https://walletconnect-relay.minerva.digital',
   qrcode: true

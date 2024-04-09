@@ -17,6 +17,7 @@ import { useNativeCurrency } from '../../hooks/useNativeCurrency';
 
 import { useWeb3React } from '@web3-react/core';
 import { TYPE } from '../../theme';
+import esptLogo from '../../assets/svg/esptsvg.svg';
 
 const HeaderFrame = styled.div`
   display: grid;
@@ -222,7 +223,7 @@ function Header({ history }: { history: any; }) {
       <HeaderRow isDark={isDark}>
         <Title href=".">
           <DXswapIcon>
-            <img width={150} src={isDark ? 'https://espento.com/images/logo.svg' : 'https://espento.com/images/logo.svg'} alt="logo" />
+            <img width={150} src={isDark ? esptLogo : esptLogo} alt="logo" />
           </DXswapIcon>
           {/* <TitleText>
             <img style={{ marginLeft: '4px', marginTop: '4px' }} src={isDark ? WordmarkDark : Wordmark} alt="logo" />

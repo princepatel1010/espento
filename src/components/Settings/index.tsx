@@ -1,27 +1,26 @@
-import React, { useState } from 'react'
-import { Settings, X, Info, Code } from 'react-feather'
-import { Text } from 'rebass'
-import styled from 'styled-components'
-import { transparentize } from 'polished'
-import { ApplicationModal } from '../../state/application/actions'
-import { useModalOpen, useToggleSettingsMenu } from '../../state/application/hooks'
+import React, { useState } from 'react';
+import { Settings, X } from 'react-feather';
+import { Text } from 'rebass';
+import styled from 'styled-components';
+import { transparentize } from 'polished';
+import { ApplicationModal } from '../../state/application/actions';
+import { useModalOpen, useToggleSettingsMenu } from '../../state/application/hooks';
 import {
   useExpertModeManager,
   useUserTransactionTTL,
   useUserSlippageTolerance,
   useDarkModeManager
-} from '../../state/user/hooks'
-import { TYPE, ExternalLink, LinkStyledButton, CloseIcon } from '../../theme'
-import { ButtonError } from '../Button'
-import { AutoColumn } from '../Column'
-import Modal from '../Modal'
-import QuestionHelper from '../QuestionHelper'
-import Row, { RowBetween, RowFixed } from '../Row'
-import Toggle from '../Toggle'
-import TransactionSettings from '../TransactionSettings'
-import border8pxRadius from '../../assets/images/border-8px-radius.png'
-import { useTransition, animated } from 'react-spring'
-import { version } from '../../../package.json'
+} from '../../state/user/hooks';
+import { TYPE, LinkStyledButton, CloseIcon } from '../../theme';
+import { ButtonError } from '../Button';
+import { AutoColumn } from '../Column';
+import Modal from '../Modal';
+import QuestionHelper from '../QuestionHelper';
+import Row, { RowBetween, RowFixed } from '../Row';
+import Toggle from '../Toggle';
+import TransactionSettings from '../TransactionSettings';
+import border8pxRadius from '../../assets/images/border-8px-radius.png';
+import { useTransition, animated } from 'react-spring';
 
 const StyledDialogOverlay = animated(styled.div`
   position: fixed;
@@ -35,7 +34,7 @@ const StyledDialogOverlay = animated(styled.div`
   align-items: center;
   justify-content: center;
   background-color: ${({ theme }) => transparentize(0.65, theme.black)};
-`)
+`);
 
 const StyledMenuIcon = styled(Settings)`
   height: 18px;
@@ -46,7 +45,7 @@ const StyledMenuIcon = styled(Settings)`
   > * {
     stroke: ${({ theme }) => theme.text4};
   }
-`
+`;
 
 const StyledCloseIcon = styled(X)`
   position: absolute;
@@ -61,14 +60,14 @@ const StyledCloseIcon = styled(X)`
   > * {
     stroke: ${({ theme }) => theme.bg5};
   }
-`
+`;
 const EmojiWrapper = styled.div`
   position: absolute;
   cursor: pointer;
   bottom: -6px;
   right: 3px;
   font-size: 12px;
-`
+`;
 
 const StyledMenu = styled.div`
   margin-left: 0.5rem;
@@ -78,7 +77,7 @@ const StyledMenu = styled.div`
   position: relative;
   border: none;
   text-align: left;
-`
+`;
 
 const MenuContainer = styled.div`
   display: flex;
@@ -95,7 +94,7 @@ const MenuContainer = styled.div`
     justify-content: center;
     align-items: center;
   `};
-`
+`;
 
 const MenuFlyout = styled.div`
   min-width: 322px;
@@ -112,63 +111,7 @@ const MenuFlyout = styled.div`
   font-size: 1rem;
   height: auto;
   box-shadow: 0px 0px 12px ${({ theme }) => transparentize(0.84, theme.black)};
-`
-
-const MenuFlyoutBottom = styled.div`
-  width: 215px;
-  background: ${({ theme }) => transparentize(0.25, theme.bg2)};
-  backdrop-filter: blur(16px);
-  border: 8px solid;
-  border-radius: 8px;
-  border-image: url(${border8pxRadius}) 8;
-  font-size: 1rem;
-  box-shadow: 0px 0px 12px ${({ theme }) => transparentize(0.84, theme.black)};
-  margin-top: 16px;
-  padding: 21px 13px;
-`
-
-const MenuFlyoutBottomItem = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 16px;
-`
-
-const InfoBadge = styled.div`
-  background: ${({ theme }) => theme.bg3};
-  padding: 3px 4px;
-  color: ${({ theme }) => theme.text1};
-  border-radius: 4px;
-  margin-right: 8px;
-`
-
-const MenuBanner = styled(ExternalLink)`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  background: ${({ theme }) => theme.primary1};
-  border-radius: 4px;
-  padding: 9px 16px;
-  :hover {
-    color: ${({ theme }) => theme.text1};
-    cursor: pointer;
-    text-decoration: none;
-  }
-
-  img {
-    top: 0;
-    left: 10px;
-    height: 100%;
-    position: absolute;
-  }
-`
-
-const FlyoutBottomAligner = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    justify-content: center;
-  `};
-`
+`;
 
 const ModalContentWrapper = styled.div`
   display: flex;
@@ -176,45 +119,31 @@ const ModalContentWrapper = styled.div`
   justify-content: center;
   padding: 26px 0;
   background-color: ${({ theme }) => transparentize(0.25, theme.bg2)};
-`
-const MenuItem = styled(ExternalLink)`
-  width: 50%;
-  color: ${({ theme }) => theme.text2};
-  :hover {
-    color: ${({ theme }) => theme.text1};
-    cursor: pointer;
-    text-decoration: none;
-  }
-  > svg {
-    margin-right: 8px;
-  }
-`
+`;
 
 const CloseTextButton = styled(LinkStyledButton)`
   color: ${({ theme }) => theme.text4};
   font-size: 13px;
   text-decoration: underline;
-`
-
-const CODE_LINK = 'https://github.com/1Hive/honeyswap-interface'
+`;
 
 export default function SettingsTab() {
-  const open = useModalOpen(ApplicationModal.SETTINGS)
+  const open = useModalOpen(ApplicationModal.SETTINGS);
   const fadeTransition = useTransition(open, null, {
     config: { duration: 200 },
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 }
-  })
+  });
 
-  const toggle = useToggleSettingsMenu()
-  const [userSlippageTolerance, setUserslippageTolerance] = useUserSlippageTolerance()
-  const [ttl, setTtl] = useUserTransactionTTL()
-  const [expertMode, toggleExpertMode] = useExpertModeManager()
-  const [darkMode] = useDarkModeManager()
+  const toggle = useToggleSettingsMenu();
+  const [userSlippageTolerance, setUserslippageTolerance] = useUserSlippageTolerance();
+  const [ttl, setTtl] = useUserTransactionTTL();
+  const [expertMode, toggleExpertMode] = useExpertModeManager();
+  const [darkMode] = useDarkModeManager();
 
   // show confirmation view before turning on
-  const [showConfirmation, setShowConfirmation] = useState(false)
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   return (
     // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30451
@@ -240,8 +169,8 @@ export default function SettingsTab() {
                 error={true}
                 padding={'18px'}
                 onClick={() => {
-                  toggleExpertMode()
-                  setShowConfirmation(false)
+                  toggleExpertMode();
+                  setShowConfirmation(false);
                 }}
               >
                 <TYPE.body fontSize="13px" fontWeight={600} color="text1" id="confirm-expert-mode">
@@ -298,13 +227,13 @@ export default function SettingsTab() {
                         toggle={
                           expertMode
                             ? () => {
-                                toggleExpertMode()
-                                setShowConfirmation(false)
-                              }
+                              toggleExpertMode();
+                              setShowConfirmation(false);
+                            }
                             : () => {
-                                toggle()
-                                setShowConfirmation(true)
-                              }
+                              toggle();
+                              setShowConfirmation(true);
+                            }
                         }
                       />
                     </RowBetween>
@@ -318,7 +247,7 @@ export default function SettingsTab() {
                       </RowBetween> */}
                   </AutoColumn>
                 </MenuFlyout>
-                <FlyoutBottomAligner>
+                {/* <FlyoutBottomAligner>
                   <MenuFlyoutBottom>
                     <MenuFlyoutBottomItem>
                       <MenuItem id="link" href="https://1hive.org/" rel="noopener noreferrer" target="_blank">
@@ -348,11 +277,11 @@ export default function SettingsTab() {
                       </TYPE.body>
                     </MenuBanner>
                   </MenuFlyoutBottom>
-                </FlyoutBottomAligner>
+                </FlyoutBottomAligner> */}
               </MenuContainer>
             </StyledDialogOverlay>
           )
       )}
     </StyledMenu>
-  )
+  );
 }

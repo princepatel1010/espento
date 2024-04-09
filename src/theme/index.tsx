@@ -1,39 +1,39 @@
-import React, { useMemo } from 'react'
+import React, { useMemo } from 'react';
 import styled, {
   ThemeProvider as StyledComponentsThemeProvider,
   createGlobalStyle,
   css,
   DefaultTheme
-} from 'styled-components'
-import { useIsDarkMode } from '../state/user/hooks'
-import { Text, TextProps } from 'rebass'
-import { Colors } from './styled'
-import 'react-datepicker/dist/react-datepicker.min.css'
-import { transparentize } from 'polished'
+} from 'styled-components';
+import { useIsDarkMode } from '../state/user/hooks';
+import { Text, TextProps } from 'rebass';
+import { Colors } from './styled';
+import 'react-datepicker/dist/react-datepicker.min.css';
+import { transparentize } from 'polished';
 
-export * from './components'
+export * from './components';
 
 export const MEDIA_WIDTHS = {
   upToExtraSmall: 500,
   upToSmall: 720,
   upToMedium: 960,
   upToLarge: 1280
-}
+};
 
 const mediaWidthTemplates: { [width in keyof typeof MEDIA_WIDTHS]: typeof css } = Object.keys(MEDIA_WIDTHS).reduce(
   (accumulator, size) => {
-    ;(accumulator as any)[size] = (a: any, b: any, c: any) => css`
+    ; (accumulator as any)[size] = (a: any, b: any, c: any) => css`
       @media (max-width: ${(MEDIA_WIDTHS as any)[size]}px) {
         ${css(a, b, c)}
       }
-    `
-    return accumulator
+    `;
+    return accumulator;
   },
   {}
-) as any
+) as any;
 
-const white = '#FFFFFF'
-const black = '#000000'
+const white = '#FFFFFF';
+const black = '#000000';
 
 export function colors(darkMode: boolean): Colors {
   return {
@@ -43,8 +43,8 @@ export function colors(darkMode: boolean): Colors {
     black,
 
     // gradient colors
-    grd1: darkMode ? '#394F50' : '#FFC3AB',
-    grd2: darkMode ? '#212429' : '#FAFAE2',
+    grd1: darkMode ? '#3e7afb' : '#FFC3AB',
+    grd2: darkMode ? '#64d1ff' : '#FAFAE2',
     grd3: darkMode ? '#394F50' : '#CBF3EF',
 
     // text
@@ -52,7 +52,7 @@ export function colors(darkMode: boolean): Colors {
     text2: darkMode ? '#C3C5CB' : '#565A69',
     text3: darkMode ? '#6C7284' : '#888D9B',
     text4: darkMode ? '#565A69' : '#C3C5CB',
-    text5: darkMode ? '#c3c5cb' : '#888d9b',
+    text5: darkMode ? '#ffffff' : '#888d9b',
 
     // backgrounds / greys
     bg1: darkMode ? '#212429' : '#FFFFFF',
@@ -68,7 +68,7 @@ export function colors(darkMode: boolean): Colors {
     advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',
 
     //primary colors
-    primary1: darkMode ? '#40444f' : '#7CE0D6',
+    primary1: darkMode ? '#3e7afb' : '#7CE0D6',
     primary2: darkMode ? '#FFE270' : '#7CE0D6',
     primary3: darkMode ? '#FFE270' : '#7CE0D6',
     primary4: darkMode ? '#FFE270' : '#7CE0D6',
@@ -96,7 +96,7 @@ export function colors(darkMode: boolean): Colors {
 
     // new UI refactor colors
     mainPurple: '#2E17F2',
-    purpleBase: '#101016',
+    purpleBase: '#f7f7f7',
     purpleOverlay: '#111018',
     purple2: '#FFE270',
     purple3: '#FFE270',
@@ -112,7 +112,7 @@ export function colors(darkMode: boolean): Colors {
     // dont wanna forget these blue yet
     // blue4: darkMode ? '#153d6f70' : '#C4D9F8',
     // blue5: darkMode ? '#153d6f70' : '#EBF4FF',
-  }
+  };
 }
 
 export function theme(darkMode: boolean): DefaultTheme {
@@ -140,71 +140,71 @@ export function theme(darkMode: boolean): DefaultTheme {
       display: flex;
       flex-flow: row nowrap;
     `
-  }
+  };
 }
 
-export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const darkMode = useIsDarkMode()
+export default function ThemeProvider({ children }: { children: React.ReactNode; }) {
+  const darkMode = useIsDarkMode();
 
-  const themeObject = useMemo(() => theme(darkMode), [darkMode])
+  const themeObject = useMemo(() => theme(darkMode), [darkMode]);
 
-  return <StyledComponentsThemeProvider theme={themeObject}>{children}</StyledComponentsThemeProvider>
+  return <StyledComponentsThemeProvider theme={themeObject}>{children}</StyledComponentsThemeProvider>;
 }
 
-const TextWrapper = styled(Text)<{ color: keyof Colors }>`
+const TextWrapper = styled(Text) <{ color: keyof Colors; }>`
   color: ${({ color, theme }) => (theme as any)[color]};
-`
+`;
 
 export const TYPE = {
   main(props: TextProps) {
-    return <TextWrapper fontWeight={500} color={'text2'} {...props} />
+    return <TextWrapper fontWeight={500} color={'text2'} {...props} />;
   },
   link(props: TextProps) {
-    return <TextWrapper fontWeight={500} color={'primary1'} {...props} />
+    return <TextWrapper fontWeight={500} color={'primary1'} {...props} />;
   },
   black(props: TextProps) {
-    return <TextWrapper fontWeight={500} color={'text1'} {...props} />
+    return <TextWrapper fontWeight={500} color={'text1'} {...props} />;
   },
   white(props: TextProps) {
-    return <TextWrapper fontWeight={500} color={'white'} {...props} />
+    return <TextWrapper fontWeight={500} color={'white'} {...props} />;
   },
   modeColor(props: TextProps) {
-    return <TextWrapper fontWeight={500} color={'yellow2'} {...props} />
+    return <TextWrapper fontWeight={500} color={'yellow2'} {...props} />;
   },
   body(props: TextProps) {
-    return <TextWrapper fontWeight={400} fontSize={16} color={'text5'} {...props} />
+    return <TextWrapper fontWeight={400} fontSize={16} color={'text5'} {...props} />;
   },
   largeHeader(props: TextProps) {
-    return <TextWrapper fontWeight={600} fontSize={24} {...props} />
+    return <TextWrapper fontWeight={600} fontSize={24} {...props} />;
   },
   mediumHeader(props: TextProps) {
-    return <TextWrapper fontWeight={500} fontSize={20} {...props} />
+    return <TextWrapper fontWeight={500} fontSize={20} {...props} />;
   },
   subHeader(props: TextProps) {
-    return <TextWrapper fontWeight={400} fontSize={14} {...props} />
+    return <TextWrapper fontWeight={400} fontSize={14} {...props} />;
   },
   small(props: TextProps) {
-    return <TextWrapper fontWeight={500} fontSize={11} {...props} />
+    return <TextWrapper fontWeight={500} fontSize={11} {...props} />;
   },
   blue(props: TextProps) {
-    return <TextWrapper fontWeight={500} color={'primary1'} {...props} />
+    return <TextWrapper fontWeight={500} color={'primary1'} {...props} />;
   },
   yellow(props: TextProps) {
-    return <TextWrapper fontWeight={500} color={'yellow1'} {...props} />
+    return <TextWrapper fontWeight={500} color={'yellow1'} {...props} />;
   },
   darkGray(props: TextProps) {
-    return <TextWrapper fontWeight={500} color={'text3'} {...props} />
+    return <TextWrapper fontWeight={500} color={'text3'} {...props} />;
   },
   gray(props: TextProps) {
-    return <TextWrapper fontWeight={500} color={'bg3'} {...props} />
+    return <TextWrapper fontWeight={500} color={'bg3'} {...props} />;
   },
   italic(props: TextProps) {
-    return <TextWrapper fontWeight={500} fontSize={12} fontStyle={'italic'} color={'text2'} {...props} />
+    return <TextWrapper fontWeight={500} fontSize={12} fontStyle={'italic'} color={'text2'} {...props} />;
   },
-  error({ error, ...props }: { error: boolean } & TextProps) {
-    return <TextWrapper fontWeight={500} color={error ? 'red1' : 'text2'} {...props} />
+  error({ error, ...props }: { error: boolean; } & TextProps) {
+    return <TextWrapper fontWeight={500} color={error ? 'red1' : 'text2'} {...props} />;
   }
-}
+};
 
 export const FixedGlobalStyle = createGlobalStyle`
 html, input, textarea, button {
@@ -237,7 +237,7 @@ html {
 a {
   text-decoration: none;
 }
-`
+`;
 
 export const ThemedGlobalStyle = createGlobalStyle`
 html {
@@ -371,4 +371,4 @@ body {
   color: ${props => props.theme.bg3};
 }
 
-`
+`;

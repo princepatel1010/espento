@@ -1,18 +1,18 @@
-import React from 'react'
-import styled from 'styled-components'
-import { darken, lighten, transparentize } from 'polished'
+import React from 'react';
+import styled from 'styled-components';
+import { darken, lighten, transparentize } from 'polished';
 
-import { RowBetween } from '../Row'
-import { ChevronDown } from 'react-feather'
-import { Button as RebassButton, ButtonProps } from 'rebass/styled-components'
-import border8pxRadius from '../../assets/images/border-8px-radius.png'
-import { Text } from 'rebass'
+import { RowBetween } from '../Row';
+import { ChevronDown } from 'react-feather';
+import { Button as RebassButton, ButtonProps } from 'rebass/styled-components';
+import border8pxRadius from '../../assets/images/border-8px-radius.png';
+import { Text } from 'rebass';
 
-const Base = styled(RebassButton)<{
-  padding?: string
-  width?: string
-  borderRadius?: string
-  altDisabledStyle?: boolean
+const Base = styled(RebassButton) <{
+  padding?: string;
+  width?: string;
+  borderRadius?: string;
+  altDisabledStyle?: boolean;
 }>`
   padding: ${({ padding }) => (padding ? padding : '18px')};
   width: ${({ width }) => (width ? width : '100%')};
@@ -47,7 +47,7 @@ const Base = styled(RebassButton)<{
   > * {
     user-select: none;
   }
-`
+`;
 
 export const ButtonPrimary = styled(Base)`
   background-color: ${({ theme }) => theme.primary1};
@@ -67,7 +67,7 @@ export const ButtonPrimary = styled(Base)`
     outline: none;
     opacity: ${({ altDisabledStyle }) => (altDisabledStyle ? '0.7' : '1')};
   }
-`
+`;
 
 export const ButtonSecondary = styled(Base)`
   border: 1px solid ${({ theme }) => theme.text5};
@@ -84,7 +84,7 @@ export const ButtonSecondary = styled(Base)`
   a:hover {
     text-decoration: none;
   }
-`
+`;
 
 export const ButtonGrey = styled(Base)`
   border: 1px solid #252237;
@@ -102,7 +102,7 @@ export const ButtonGrey = styled(Base)`
   a:hover {
     text-decoration: none;
   }
-`
+`;
 
 export const ButtonDark = styled(Base)`
   border: 1px solid #252237;
@@ -119,7 +119,7 @@ export const ButtonDark = styled(Base)`
   a:hover {
     text-decoration: none;
   }
-`
+`;
 
 export const ButtonOutlined = styled(Base)`
   border: 8px solid;
@@ -133,7 +133,7 @@ export const ButtonOutlined = styled(Base)`
     opacity: 50%;
     cursor: not-allowed;
   }
-`
+`;
 
 export const ButtonEmpty = styled(Base)`
   background-color: transparent;
@@ -155,7 +155,7 @@ export const ButtonEmpty = styled(Base)`
     opacity: 50%;
     cursor: auto;
   }
-`
+`;
 
 export const ButtonWhite = styled(Base)`
   border: 1px solid #edeef2;
@@ -176,7 +176,7 @@ export const ButtonWhite = styled(Base)`
     opacity: 50%;
     cursor: auto;
   }
-`
+`;
 
 const ButtonConfirmedStyle = styled(Base)`
   background-color: ${({ theme }) => lighten(0.5, theme.green1)};
@@ -187,7 +187,7 @@ const ButtonConfirmedStyle = styled(Base)`
     opacity: 50%;
     cursor: auto;
   }
-`
+`;
 
 const ButtonErrorStyle = styled(Base)`
   background-color: ${({ theme }) => theme.red1};
@@ -209,29 +209,29 @@ const ButtonErrorStyle = styled(Base)`
     box-shadow: none;
     background-color: ${({ theme }) => theme.red1};
   }
-`
+`;
 
 export function ButtonConfirmed({
   confirmed,
   altDisabledStyle,
   ...rest
-}: { confirmed?: boolean; altDisabledStyle?: boolean } & ButtonProps) {
+}: { confirmed?: boolean; altDisabledStyle?: boolean; } & ButtonProps) {
   if (confirmed) {
-    return <ButtonConfirmedStyle {...rest} />
+    return <ButtonConfirmedStyle {...rest} />;
   } else {
-    return <ButtonPrimary {...rest} altDisabledStyle={altDisabledStyle} />
+    return <ButtonPrimary {...rest} altDisabledStyle={altDisabledStyle} />;
   }
 }
 
-export function ButtonError({ error, ...rest }: { error?: boolean } & ButtonProps) {
+export function ButtonError({ error, ...rest }: { error?: boolean; } & ButtonProps) {
   if (error) {
-    return <ButtonErrorStyle {...rest} />
+    return <ButtonErrorStyle {...rest} />;
   } else {
-    return <ButtonPrimary {...rest} />
+    return <ButtonPrimary {...rest} />;
   }
 }
 
-export function ButtonWithLink({ link, text, marginTop }: { link: string; text: string; marginTop?: string }) {
+export function ButtonWithLink({ link, text, marginTop }: { link: string; text: string; marginTop?: string; }) {
   return (
     <ButtonSecondary
       id="join-pool-button"
@@ -245,10 +245,10 @@ export function ButtonWithLink({ link, text, marginTop }: { link: string; text: 
         {text} <span style={{ fontSize: '11px', marginLeft: '4px' }}>↗</span>
       </Text>
     </ButtonSecondary>
-  )
+  );
 }
 
-export function ButtonDropdown({ disabled = false, children, ...rest }: { disabled?: boolean } & ButtonProps) {
+export function ButtonDropdown({ disabled = false, children, ...rest }: { disabled?: boolean; } & ButtonProps) {
   return (
     <ButtonPrimary {...rest} disabled={disabled}>
       <RowBetween>
@@ -256,14 +256,14 @@ export function ButtonDropdown({ disabled = false, children, ...rest }: { disabl
         <ChevronDown size={24} />
       </RowBetween>
     </ButtonPrimary>
-  )
+  );
 }
 
 const StyledChevronDown = styled(ChevronDown)`
   color: ${({ theme }) => theme.text5};
-`
+`;
 
-export function ButtonDropdownLight({ disabled = false, children, ...rest }: { disabled?: boolean } & ButtonProps) {
+export function ButtonDropdownLight({ disabled = false, children, ...rest }: { disabled?: boolean; } & ButtonProps) {
   return (
     <ButtonOutlined {...rest} disabled={disabled}>
       <RowBetween>
@@ -271,5 +271,5 @@ export function ButtonDropdownLight({ disabled = false, children, ...rest }: { d
         <StyledChevronDown size={20} />
       </RowBetween>
     </ButtonOutlined>
-  )
+  );
 }

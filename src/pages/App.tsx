@@ -118,15 +118,7 @@ export default function App() {
           </BodyWrapper>
 
           <Footer>
-            “That which is not good for the{' '}
-            <span role="img" aria-label="bee">
-              🐝
-            </span>
-            -hive cannot be good for the{' '}
-            <span role="img" aria-label="bee">
-              🐝
-            </span>
-            .” —Marcus Aurelius
+
           </Footer>
         </AppWrapper>
       </HashRouter>

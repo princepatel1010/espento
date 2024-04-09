@@ -1,30 +1,30 @@
-import React, { useMemo } from 'react'
-import styled from 'styled-components'
-import { Pair } from 'dxswap-sdk'
-import { Link } from 'react-router-dom'
-import { SwapPoolTabs } from '../../components/NavigationTabs'
-import { PageWrapper } from './styleds'
+import React, { useMemo } from 'react';
+import styled from 'styled-components';
+import { Pair } from 'dxswap-sdk';
+import { Link } from 'react-router-dom';
+import { SwapPoolTabs } from '../../components/NavigationTabs';
+import { PageWrapper } from './styleds';
 
-import FullPositionCard from '../../components/PositionCard'
-import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
-import { OutlineCard } from '../../components/Card'
-import { TYPE, HideSmall, StyledInternalLink } from '../../theme'
-import { Text } from 'rebass'
-import { RowBetween, RowFixed } from '../../components/Row'
-import { ButtonPrimary, ButtonSecondary, ButtonWithLink } from '../../components/Button'
-import { AutoColumn } from '../../components/Column'
+import FullPositionCard from '../../components/PositionCard';
+import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks';
+import { OutlineCard } from '../../components/Card';
+import { TYPE, HideSmall, StyledInternalLink } from '../../theme';
+import { Text } from 'rebass';
+import { RowBetween, RowFixed } from '../../components/Row';
+import { ButtonPrimary, ButtonSecondary } from '../../components/Button';
+import { AutoColumn } from '../../components/Column';
 
-import { useActiveWeb3React } from '../../hooks'
-import { usePairs } from '../../data/Reserves'
-import { toDXSwapLiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
-import { CardSection } from '../../components/earn/styled'
+import { useActiveWeb3React } from '../../hooks';
+import { usePairs } from '../../data/Reserves';
+import { toDXSwapLiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks';
+import { CardSection } from '../../components/earn/styled';
 
 const VoteCard = styled.div`
   overflow: hidden;
   background-color: ${({ theme }) => theme.bg1};
   border: 1px solid ${({ theme }) => theme.bg2};
   border-radius: 8px;
-`
+`;
 
 const TitleRow = styled(RowBetween)`
   ${({ theme }) => theme.mediaWidth.upToSmall`
@@ -33,7 +33,7 @@ const TitleRow = styled(RowBetween)`
     width: 100%;
     flex-direction: column-reverse;
   `};
-`
+`;
 
 const ButtonRow = styled(RowFixed)`
   gap: 8px;
@@ -42,21 +42,21 @@ const ButtonRow = styled(RowFixed)`
     flex-direction: row-reverse;
     justify-content: space-between;
   `};
-`
+`;
 
 const ResponsiveButtonPrimary = styled(ButtonPrimary)`
   width: fit-content;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     width: 48%;
   `};
-`
+`;
 
 const ResponsiveButtonSecondary = styled(ButtonSecondary)`
   width: fit-content;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     width: 48%;
   `};
-`
+`;
 
 const EmptyProposals = styled.div`
   border: 1px solid ${({ theme }) => theme.text5};
@@ -66,22 +66,22 @@ const EmptyProposals = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`
+`;
 
 export default function Pool() {
-  const { account, chainId } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React();
 
   // fetch the user's balances of all tracked DXSwap LP tokens
-  const trackedTokenPairs = useTrackedTokenPairs()
+  const trackedTokenPairs = useTrackedTokenPairs();
 
   const tokenPairsWithLiquidityTokens = useMemo(
     () => trackedTokenPairs.map(tokens => ({ liquidityToken: toDXSwapLiquidityToken(tokens), tokens })),
     [trackedTokenPairs]
-  )
+  );
   const liquidityTokens = useMemo(() => tokenPairsWithLiquidityTokens.map(tpwlt => tpwlt.liquidityToken), [
     tokenPairsWithLiquidityTokens
-  ])
-  const [dxSwapPairsBalances] = useTokenBalancesWithLoadingIndicator(account ?? undefined, liquidityTokens)
+  ]);
+  const [dxSwapPairsBalances] = useTokenBalancesWithLoadingIndicator(account ?? undefined, liquidityTokens);
 
   // fetch the reserves for all DXSwap pools in which the user has a balance
   const liquidityTokensWithBalances = useMemo(
@@ -90,13 +90,13 @@ export default function Pool() {
         dxSwapPairsBalances[liquidityToken.address]?.greaterThan('0')
       ),
     [tokenPairsWithLiquidityTokens, dxSwapPairsBalances]
-  )
+  );
 
-  const dxSwapPairs = usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))
+  const dxSwapPairs = usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens));
 
   const allDXSwapPairsWithLiquidity = dxSwapPairs
     .map(([, pair]) => pair)
-    .filter((dxSwapPair): dxSwapPair is Pair => Boolean(dxSwapPair))
+    .filter((dxSwapPair): dxSwapPair is Pair => Boolean(dxSwapPair));
 
   return (
     <>
@@ -144,11 +144,11 @@ export default function Pool() {
         </AutoColumn>
         {account && chainId && (
           <>
-            <ButtonWithLink
+            {/* <ButtonWithLink
               link={`https://info.honeyswap.org/#/account/${account}?chainId=${chainId}`}
               text={'ACCOUNT ANALYTICS AND ACCRUED FEES'}
               marginTop="32px"
-            />
+            /> */}
             <TYPE.body
               color="text5"
               textAlign="center"
@@ -193,5 +193,5 @@ export default function Pool() {
         </VoteCard>
       </PageWrapper>
     </>
-  )
+  );
 }
